@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,11 +14,17 @@ namespace Stocks_
 {
     public partial class Form1 : Form
     {
-        List<Stocks> stocksList = new List<Stocks>();
+       
         Random rnd = new Random();
-        string colour = "red";
         PointPairList list1 = new PointPairList();
         PointPairList list2 = new PointPairList();
+        PointPairList list3 = new PointPairList();
+        PointPairList list4 = new PointPairList();
+        PointPairList list5 = new PointPairList();
+        PointPairList list6 = new PointPairList();
+        PointPairList list7 = new PointPairList();
+
+
         double x = 0;
 
         public Form1()
@@ -29,101 +35,115 @@ namespace Stocks_
             t.Tick += new EventHandler(timer_Tick);
             t.Start();
 
-          //  zedGraph.
-;           CreateGraph(zedGraph);
-            GraphPane myPane = zedGraph.GraphPane;
-            zedGraph.GraphPane.YAxis.Scale.Max = 10;
-            //MessageBox.Show( zedGraph.GraphPane.ToString());
-            
-         
+            CreateGraph(zedGraph);
+            CreateGraph(zedGraphControl1);
+            CreateGraph(zedGraphControl2);
+            CreateGraph(zedGraphControl3);
+            CreateGraph(zedGraphControl4);
+            CreateGraph(zedGraphControl5);
            
+            zedGraph.GraphPane.YAxis.Scale.Max = 5;
+            zedGraphControl1.GraphPane.YAxis.Scale.Max = 5;
+            zedGraphControl2.GraphPane.YAxis.Scale.Max = 5;
+            zedGraphControl3.GraphPane.YAxis.Scale.Max = 5;
+            zedGraphControl4.GraphPane.YAxis.Scale.Max = 5;
+            zedGraphControl5.GraphPane.YAxis.Scale.Max = 5;
         }
+
 
 
         void timer_Tick(object sender, EventArgs e)
         {
            
             double rand = rnd.Next(3);
+            double rand1 = rnd.Next(4);
+            double rand2 = rnd.Next(2);
+            double rand3 = rnd.Next(2);
+            double rand4 = rnd.Next(5);
+            double rand5 = rnd.Next(3);
+
             x = x + 0.2;
-
-          //  MessageBox.Show("raww");
-
-            //foreach (Stocks stock in stocksList)
-            //{
-            //    lineChart.Series[stock.stockName].Points.AddY(rand);
-
-            //    if (lineChart.Series[stock.StockName].Points.Count > 20)
-            //    {
-            //        lineChart.Series[stock.StockName].Points.RemoveAt(0);
-            //    }
-            //}
             list1.Add(x, rand);
-            //LineItem myCurve = zedGraph.GraphPane.AddCurve("Porsche",
-            //list1, Color.Red, SymbolType.Diamond);
-            zedGraph.GraphPane.XAxis.Scale.Max = x;
-            if (x > 10)
+            list3.Add(x, rand1);
+            list4.Add(x, rand2);
+            list5.Add(x, rand3);
+            list6.Add(x, rand4);
+            list7.Add(x, rand5);
+          
+
+            zedGraph.GraphPane.XAxis.Scale.Max = x + 2;
+            zedGraphControl1.GraphPane.XAxis.Scale.Max = x + 2;
+            zedGraphControl2.GraphPane.XAxis.Scale.Max = x + 2;
+            zedGraphControl3.GraphPane.XAxis.Scale.Max = x + 2;
+            zedGraphControl4.GraphPane.XAxis.Scale.Max = x + 2;
+            zedGraphControl5.GraphPane.XAxis.Scale.Max = x + 2;
+
+            if (x > 10) 
             {
                 zedGraph.GraphPane.XAxis.Scale.Min = x - 10;
+                zedGraphControl1.GraphPane.XAxis.Scale.Min = x - 10;
+                zedGraphControl2.GraphPane.XAxis.Scale.Min = x - 10;
+                zedGraphControl3.GraphPane.XAxis.Scale.Min = x - 10;
+                zedGraphControl4.GraphPane.XAxis.Scale.Min = x - 10;
+                zedGraphControl5.GraphPane.XAxis.Scale.Min = x - 10;
             }
-            zedGraph.Invalidate();
             
+
+            zedGraph.Invalidate();
+            zedGraphControl1.Invalidate();
+            zedGraphControl2.Invalidate();
+            zedGraphControl3.Invalidate();
+            zedGraphControl4.Invalidate();
+            zedGraphControl5.Invalidate();
+ 
+         
         }
 
-        private void createBtn_Click(object sender, EventArgs e)
-        {
-            int num;
-            if (stkNameTxt.Text != "" && int.TryParse(StkVauleTxt.Text, out num))
-            {
-                Stocks stock = new Stocks();
-
-                stock.stockName = stkNameTxt.Text;
-
-                stock.stockValue = num;
-
-                stocksList.Add(stock);
-
-                addNewSeries(stock);
-            }
-        }
-
-
-        private void addNewSeries(Stocks stock)
-        {
-            lineChart.Series.Add(stock.stockName);
-            lineChart.Series[stock.stockName].ChartType = SeriesChartType.Spline;
-
-            lineChart.Legends.Add(stock.stockName);
-            lineChart.Series[stock.stockName].Color = ColorTranslator.FromHtml(colour);
-        }
-
-        private void comboComboBx_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            colour = comboComboBx.SelectedItem.ToString();
-        }
-
+       
         private void zedGraph_Load(object sender, EventArgs e)
         {
-            //GraphPane Pane = zedGraph.GraphPane;
-           
-            //double x, y, z;
-            //PointPairList list1 = new PointPairList();
-            //for(int i = 0; i<100; i++)
-            //{
-            //    list1.Add(i,i/2);
-            //}
-            //LineItem myLine = Pane.AddCurve("blargh", list1, Color.Azure, SymbolType.Diamond);
-            //zedGraph.AxisChange();
+            
         }
         private void CreateGraph(ZedGraphControl zgc)
         {
 
-           
- 
-            LineItem myCurve = zedGraph.GraphPane.AddCurve("Porsche",
-                 list1, Color.Red, SymbolType.Diamond);
-
-            zedGraph.AxisChange();
             
+            LineItem myCurve = zedGraph.GraphPane.AddCurve("Google",
+            list1, Color.Red, SymbolType.Diamond);
+
+            LineItem myCurve1 = zedGraphControl1.GraphPane.AddCurve("Facebook",
+            list3, Color.Red, SymbolType.Diamond);
+
+            LineItem myCurve2 = zedGraphControl2.GraphPane.AddCurve("Intel",
+            list4, Color.Red, SymbolType.Diamond);
+
+            LineItem myCurve3 = zedGraphControl3.GraphPane.AddCurve("SAP",
+            list5, Color.Red, SymbolType.Diamond);
+
+            LineItem myCurve4 = zedGraphControl4.GraphPane.AddCurve("HP",
+            list6, Color.Red, SymbolType.Diamond);
+
+            LineItem myCurve5 = zedGraphControl5.GraphPane.AddCurve("Yahoo",
+            list7, Color.Red, SymbolType.Diamond);
+
+            
+        }
+
+        
+
+        private void zedGraph_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void zedGraphControl1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
 
 
@@ -132,3 +152,4 @@ namespace Stocks_
       
     }
 }
+
